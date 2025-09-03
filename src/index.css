@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 221 83% 12%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 221 83% 20%;
+
+    --secondary: 45 100% 93%;
+    --secondary-foreground: 221 83% 12%;
+    --secondary-hover: 45 100% 87%;
+
+    --luxury: 91 94% 70%;
+    --luxury-foreground: 0 0% 0%;
+    --luxury-hover: 0 1% 74%;
+
+    --muted: 220 13% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 220 13% 96%;
+    --accent-foreground: 220 15% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 12%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-hover)));
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury)), hsl(var(--luxury-hover)));
+    --gradient-background: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 13% 98%));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.1);
+    --shadow-luxury: 0 8px 32px -8px hsl(var(--luxury) / 0.2);
+    --shadow-card: 0 2px 8px -2px hsl(220 15% 15% / 0.08);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 15% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 15% 8%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 15% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 95%;
+    --primary-foreground: 221 83% 12%;
+    --primary-hover: 0 0% 85%;
+
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 0 0% 95%;
+    --secondary-hover: 220 15% 18%;
+
+    --luxury: 43 74% 55%;
+    --luxury-foreground: 220 15% 6%;
+    --luxury-hover: 0 14% 92%;
+
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 9% 55%;
+
+    --accent: 220 15% 12%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 0 0% 95%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-hover)));
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury)), hsl(var(--luxury-hover)));
+    --gradient-background: linear-gradient(180deg, hsl(220 15% 6%), hsl(220 15% 4%));
+    
+    /* Dark mode shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(0 0% 0% / 0.3);
+    --shadow-luxury: 0 8px 32px -8px hsl(var(--luxury) / 0.3);
+    --shadow-card: 0 2px 8px -2px hsl(0 0% 0% / 0.2);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-background);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  /* Form Steps Animation */
+  .step-enter {
+    @apply opacity-0 translate-x-8;
+  }
+  
+  .step-enter-active {
+    @apply opacity-100 translate-x-0 transition-all duration-500 ease-out;
+  }
+  
+  .step-exit {
+    @apply opacity-100 translate-x-0;
+  }
+  
+  .step-exit-active {
+    @apply opacity-0 -translate-x-8 transition-all duration-300 ease-in;
+  }
+
+  /* Progress Bar Animation */
+  .progress-fill {
+    @apply transition-all duration-700 ease-out;
+  }
+
+  /* Luxury Button Hover */
+  .luxury-hover {
+    @apply relative overflow-hidden;
+  }
+  
+  .luxury-hover::before {
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent;
+    content: '';
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  
+  .luxury-hover:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* Floating Label Effect */
+  .floating-label {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-all duration-200 pointer-events-none;
+  }
+  
+  .floating-label.active {
+    @apply top-0 -translate-y-1/2 text-xs bg-background px-1 text-primary;
+  }
+}
