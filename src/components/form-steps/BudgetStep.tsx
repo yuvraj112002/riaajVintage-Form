@@ -293,7 +293,7 @@ const BudgetStep: React.FC = () => {
                           placeholder="0.00"
                           className="pl-8 transition-all duration-300 focus:shadow-elegant"
                           {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
                         />
                       </div>
                     </FormControl>
@@ -320,7 +320,7 @@ const BudgetStep: React.FC = () => {
                           placeholder="0.00"
                           className="pl-8 transition-all duration-300 focus:shadow-elegant"
                           {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
                         />
                       </div>
                     </FormControl>

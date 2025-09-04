@@ -69,7 +69,6 @@ const steps = [
 const HandpickForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  console.log(isSubmitting);
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -128,11 +127,11 @@ const HandpickForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form submitted:', data);
+    
     setIsSubmitting(true);
     try {
       // Here you would integrate with EmailJS
-      console.log('Form submitted:', data);
+    
 
       // Simulate API call
       await sendHandpickEmail(data)

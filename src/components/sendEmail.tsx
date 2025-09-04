@@ -136,7 +136,6 @@ export async function sendHandpickEmail(values: FormData) {
   const serviceId  = import.meta.env.VITE_EMAIL_SERVICE_ID;
   const templateId = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
   const publicKey  = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
-  console.log("My keys ",serviceId,templateId,publicKey)
   if (!serviceId || !templateId || !publicKey) {
     throw new Error("EmailJS env vars missing. Check .env and restart dev server.");
   }
@@ -152,6 +151,5 @@ export async function sendHandpickEmail(values: FormData) {
   };
 
   const res = await emailjs.send(serviceId, templateId, templateParams, publicKey);
-  console.log("EmailJS ok:", res);
 }
 
