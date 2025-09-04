@@ -158,7 +158,7 @@ const HandpickForm: React.FC = () => {
   const progressPercentage = (currentStep / steps.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-background py-8 px-4">
+    <div className="min-h-full bg-gradient-background py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8 text-center">
