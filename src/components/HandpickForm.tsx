@@ -23,10 +23,10 @@ const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   whatsapp: z.string().min(1, 'WhatsApp number is required'),
   email: z.string().email('Valid email is required'),
-  company: z.string().optional(),
+  // company: z.string().optional(),
   // businessType: z.string().min(1, 'Business type is required'),
-  region: z.string().min(1, 'Region is required'),
-  timezone: z.string().min(1, 'Timezone is required'),
+  // region: z.string().min(1, 'Region is required'),
+  // timezone: z.string().min(1, 'Timezone is required'),
 
   // Product details
   // brands: z.array(z.string()).min(1, 'At least one brand must be selected'),
@@ -59,9 +59,9 @@ export type FormData = z.infer<typeof formSchema>;
 
 const steps = [
   { id: 1, title: 'Welcome', component: WelcomeStep },
-  { id: 2, title: 'Contact', component: ContactStep },
-  { id: 3, title: 'Products', component: ProductStep },
-  { id: 4, title: 'Budget', component: BudgetStep },
+  { id: 2, title: 'Products', component: ProductStep },
+  { id: 3, title: 'Budget', component: BudgetStep },
+  { id: 4, title: 'Contact', component: ContactStep },
   { id: 5, title: 'Schedule', component: ScheduleStep },
   { id: 6, title: 'Review', component: ReviewStep },
 ];
@@ -72,26 +72,37 @@ const HandpickForm: React.FC = () => {
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
-    defaultValues: {
-      // brands: [],
-      categories: [],
-      budgetFrom: 0,
-      budgetTo: 0,
-      consent: false
-    }
+      defaultValues: {
+    name: '',
+    whatsapp: '',
+    email: '',
+    customBrand: '',
+    categories: [
+      { name: '', grade: '', size: '', color: '', quantity: 1, description: '' }
+    ],
+    currency: '',
+    budgetFrom: 0,
+    budgetTo: 0,
+    notes: '',
+    // date: '',                
+    timeSlot: '',
+    scheduleTimezone: '',
+    consent: false
+  },
+  shouldUnregister: false
   });
 
   const getStepFields = (step: number): (keyof FormData)[] => {
     switch (step) {
-      case 2: // Contact Step
-        return ['name', 'whatsapp', 'email', 'region', 'timezone'];
-      case 3: // Product Step
+      case 2:
         return ['categories'];
-      case 4: // Budget Step
+      case 3:
         return ['currency', 'budgetFrom', 'budgetTo'];
-      case 5: // Schedule Step
+      case 4:
+        return ['name', 'whatsapp', 'email'];
+      case 5:
         return ['date', 'timeSlot', 'scheduleTimezone'];
-      case 6: // Review Step
+      case 6:
         return ['consent'];
       default:
         return [];
@@ -127,11 +138,11 @@ const HandpickForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    
+
     setIsSubmitting(true);
     try {
       // Here you would integrate with EmailJS
-    
+
 
       // Simulate API call
       await sendHandpickEmail(data)

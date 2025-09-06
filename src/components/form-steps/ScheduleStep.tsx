@@ -80,10 +80,22 @@ const ScheduleStep: React.FC = () => {
   const selectedDate = watch('date');
 
   const isDateDisabled = (date: Date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date < today;
-  };
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Disable past dates
+  if (date < today) {
+    return true;
+  }
+
+  // Disable Saturday (6) and Sunday (0)
+  const day = date.getDay();
+  if (day === 0 ) {
+    return true;
+  }
+
+  return false;
+};
 
   const getAvailableTimeSlots = () => {
     if (!selectedDate) return timeSlots;

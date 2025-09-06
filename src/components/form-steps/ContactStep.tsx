@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { FormData } from '../HandpickForm';
 import {
   FormControl,
@@ -17,7 +17,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { User, Phone, Mail, Building2, Globe, Clock } from 'lucide-react';
-
+import { PhoneInput as IntlPhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 const businessTypes = [
   'Retail',
   'Wholesale',
@@ -92,9 +93,9 @@ const ContactStep: React.FC = () => {
                 Full Name *
               </FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="Enter your full name" 
-                  {...field} 
+                <Input
+                  placeholder="Enter your full name"
+                  {...field}
                   className="transition-all duration-300 focus:shadow-elegant"
                 />
               </FormControl>
@@ -103,24 +104,30 @@ const ContactStep: React.FC = () => {
           )}
         />
 
-        <FormField
-          control={control}
+        <Controller
           name="whatsapp"
-          render={({ field }) => (
+          control={control}
+          rules={{
+            required: 'WhatsApp number is required',
+            validate: (v) => !!v && v.startsWith('+') && v.length >= 8 || 'Enter a valid phone number',
+          }}
+          render={({ field, fieldState }) => (
             <FormItem>
               <FormLabel className="flex items-center gap-2">
                 <Phone className="w-4 h-4" />
                 WhatsApp Number *
               </FormLabel>
               <FormControl>
-                <Input 
-                type='number'
-                  placeholder="+1234567890" 
-                  {...field}
-                  className="transition-all duration-300 focus:shadow-elegant"
+                <IntlPhoneInput
+                  defaultCountry="in"
+                  value={field.value || ''}
+                  onChange={(v) => field.onChange(v)}  // returns +E.164
+                  className="w-full"
+                  inputClassName="w-full rounded-md border bg-background px-3 py-2 text-sm shadow-sm
+                          transition outline-none border-input"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{fieldState.error?.message}</FormMessage>
             </FormItem>
           )}
         />
@@ -135,9 +142,9 @@ const ContactStep: React.FC = () => {
                 Email Address *
               </FormLabel>
               <FormControl>
-                <Input 
+                <Input
                   type="email"
-                  placeholder="your.email@company.com" 
+                  placeholder="your.email@company.com"
                   {...field}
                   className="transition-all duration-300 focus:shadow-elegant"
                 />
@@ -147,7 +154,17 @@ const ContactStep: React.FC = () => {
           )}
         />
 
-        <FormField
+
+      </div>
+    </div>
+  );
+};
+
+export default ContactStep;
+
+
+
+{/* <FormField
           control={control}
           name="company"
           render={({ field }) => (
@@ -166,9 +183,9 @@ const ContactStep: React.FC = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        {/* <FormField
+{/* <FormField
           control={control}
           name="businessType"
           render={({ field }) => (
@@ -196,7 +213,7 @@ const ContactStep: React.FC = () => {
           )}
         /> */}
 
-        <FormField
+{/* <FormField
           control={control}
           name="region"
           render={({ field }) => (
@@ -222,9 +239,9 @@ const ContactStep: React.FC = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        <FormField
+{/* <FormField
           control={control}
           name="timezone"
           render={({ field }) => (
@@ -250,10 +267,4 @@ const ContactStep: React.FC = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default ContactStep;
+        /> */}

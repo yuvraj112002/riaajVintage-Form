@@ -104,7 +104,7 @@ const ReviewStep: React.FC = () => {
                   <p className="text-sm text-muted-foreground">{formData.email || 'Not provided'}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <Building2 className="w-4 h-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Company</p>
@@ -117,14 +117,14 @@ const ReviewStep: React.FC = () => {
                   <p className="text-sm font-medium">Business Type</p>
                   <p className="text-sm text-muted-foreground">{formData.businessType || 'Not provided'}</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
+              </div> */}
+              {/* <div className="flex items-center gap-3">
                 <Globe className="w-4 h-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Region</p>
                   <p className="text-sm text-muted-foreground">{formData.region || 'Not provided'}</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </CardContent>
         </Card>
@@ -139,10 +139,10 @@ const ReviewStep: React.FC = () => {
             {/* <EditButton section="products" /> */}
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Brands */}
+           
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Tag className="w-4 h-4 text-muted-foreground" />
+              {/* <div className="flex items-center gap-2 mb-3"> */}
+                {/* <Tag className="w-4 h-4 text-muted-foreground" />
                 <h4 className="font-medium">Selected Brands</h4>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -155,7 +155,7 @@ const ReviewStep: React.FC = () => {
                 ) : (
                   <p className="text-sm text-muted-foreground">No brands selected</p>
                 )}
-              </div>
+              </div> */}
               {formData.customBrand && (
                 <div className="mt-2">
                   <Badge variant="outline">Custom: {formData.customBrand}</Badge>

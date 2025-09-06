@@ -7,17 +7,17 @@ type FormData = {
   categories: Array<{
     name: string; grade: string; size: string; color: string; quantity: number; description?: string;
   }>;
-  company?: string;
+  // company?: string;
   consent: boolean;
   currency: string;
   date: Date;
   email: string;
   name: string;
   notes?: string;
-  region: string;
+  // region: string;
   scheduleTimezone: string;
   timeSlot: string;
-  timezone: string;
+  // timezone: string;
   whatsapp: string;
 };
 
@@ -61,17 +61,6 @@ function buildSummaryHTML(v: FormData) {
       <td style="padding:12px;border:1px solid #eee;background:#fafafa;">WhatsApp</td>
       <td style="padding:12px;border:1px solid #eee;">${v.whatsapp}</td>
     </tr>
-    <tr>
-      <td style="padding:12px;border:1px solid #eee;background:#fafafa;">Company / Type</td>
-      <td style="padding:12px;border:1px solid #eee;">${v.company || "-"} </td>
-    </tr>
-    <tr>
-      <td style="padding:12px;border:1px solid #eee;background:#fafafa;">Region / TZ</td>
-      <td style="padding:12px;border:1px solid #eee;">${v.region} &nbsp; | &nbsp; ${v.timezone}</td>
-    </tr>
-
-  
-
     <tr>
       <td style="padding:12px;border:1px solid #eee;background:#fafafa;">Budget</td>
       <td style="padding:12px;border:1px solid #eee;">${budget || "-"}</td>
@@ -146,8 +135,8 @@ export async function sendHandpickEmail(values: FormData) {
     name: values.name,
     email: values.email,
     whatsapp: values.whatsapp,
-    region: values.region,
-    timezone: values.timezone,
+    // region: values.region,
+    // timezone: values.timezone,
   };
 
   const res = await emailjs.send(serviceId, templateId, templateParams, publicKey);
