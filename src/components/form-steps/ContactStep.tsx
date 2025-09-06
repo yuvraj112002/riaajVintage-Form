@@ -118,6 +118,7 @@ const ContactStep: React.FC = () => {
                 WhatsApp Number *
               </FormLabel>
               <FormControl>
+                 <div className="relative">
                 <IntlPhoneInput
                   defaultCountry="in"
                   value={field.value || ''}
@@ -126,6 +127,7 @@ const ContactStep: React.FC = () => {
                   inputClassName="w-full rounded-md border bg-background px-3 py-2 text-sm shadow-sm
                           transition outline-none border-input"
                 />
+              </div>
               </FormControl>
               <FormMessage>{fieldState.error?.message}</FormMessage>
             </FormItem>
