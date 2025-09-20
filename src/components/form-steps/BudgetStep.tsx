@@ -34,6 +34,24 @@ const currencies = [
   { code: "INR", symbol: "₹", name: "Indian Rupee" },
 ];
 
+const minEuro = 300;
+const currencyRates: Record<string, number> = {
+  EUR: 1,
+  USD: 1.07,
+  GBP: 0.86,
+  JPY: 160,
+  CAD: 1.46,
+  AUD: 1.65,
+  CHF: 0.96,
+  CNY: 7.75,
+  INR: 89,
+};
+
+const getMinAmount = (code: string) => {
+  const rate = currencyRates[code] || 1;
+  return minEuro * rate;
+};
+
 const BudgetStep: React.FC = () => {
   const { control, setValue, watch } = useFormContext<HandpickForm>();
   const notes = watch("notes");
@@ -42,6 +60,7 @@ const BudgetStep: React.FC = () => {
   // --- Recording State
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [budgetError, setBudgetError] = useState<string | null>(null);
 
   // --- Refs for recording lifecycle
   const streamRef = useRef<globalThis.MediaStream | null>(null);
@@ -225,6 +244,22 @@ const BudgetStep: React.FC = () => {
     else startRecording();
   }
 
+  function validateBudget(budgetFrom: number, budgetTo: number, currency: string) {
+    const minAmount = getMinAmount(currency);
+    if (budgetFrom < minAmount || budgetTo < minAmount) {
+      setBudgetError(
+        `Minimum budget is €${minEuro} or equivalent (${minAmount.toFixed(2)} ${currency})`
+      );
+      return false;
+    }
+    if (budgetTo <= budgetFrom) {
+      setBudgetError("Budget To must be greater than Budget From.");
+      return false;
+    }
+    setBudgetError(null);
+    return true;
+  }
+
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
@@ -250,7 +285,10 @@ const BudgetStep: React.FC = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Currency *</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={(val) => {
+                    field.onChange(val);
+                    validateBudget(watch("budgetFrom"), watch("budgetTo"), val);
+                  }} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className="transition-all duration-300 focus:shadow-elegant">
                         <SelectValue placeholder="Select currency" />
@@ -293,7 +331,11 @@ const BudgetStep: React.FC = () => {
                           placeholder="0.00"
                           className="pl-8 transition-all duration-300 focus:shadow-elegant"
                           {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                          onChange={(e) => {
+                            const value = parseFloat(e.target.value);
+                            field.onChange(value);
+                            validateBudget(value, watch("budgetTo"), currency);
+                          }}
                         />
                       </div>
                     </FormControl>
@@ -320,7 +362,11 @@ const BudgetStep: React.FC = () => {
                           placeholder="0.00"
                           className="pl-8 transition-all duration-300 focus:shadow-elegant"
                           {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                          onChange={(e) => {
+                            const value = parseFloat(e.target.value);
+                            field.onChange(value);
+                            validateBudget(watch("budgetFrom"), value, currency);
+                          }}
                         />
                       </div>
                     </FormControl>
@@ -329,6 +375,9 @@ const BudgetStep: React.FC = () => {
                 )}
               />
             </div>
+            {budgetError && (
+              <div className="text-destructive text-sm font-medium mt-2">{budgetError}</div>
+            )}
           </CardContent>
         </Card>
 

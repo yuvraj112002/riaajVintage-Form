@@ -72,24 +72,24 @@ const HandpickForm: React.FC = () => {
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
-      defaultValues: {
-    name: '',
-    whatsapp: '',
-    email: '',
-    customBrand: '',
-    categories: [
-      { name: '', grade: '', size: '', color: '', quantity: 1, description: '' }
-    ],
-    currency: '',
-    budgetFrom: 0,
-    budgetTo: 0,
-    notes: '',
-    // date: '',                
-    timeSlot: '',
-    scheduleTimezone: '',
-    consent: false
-  },
-  shouldUnregister: false
+    defaultValues: {
+      name: '',
+      whatsapp: '',
+      email: '',
+      customBrand: '',
+      categories: [
+        { name: '', grade: '', size: '', color: '', quantity: 1, description: '' }
+      ],
+      currency: '',
+      budgetFrom: 0,
+      budgetTo: 0,
+      notes: '',
+      // date: '',                
+      timeSlot: '',
+      scheduleTimezone: '',
+      consent: false
+    },
+    shouldUnregister: false
   });
 
   const getStepFields = (step: number): (keyof FormData)[] => {
@@ -166,7 +166,6 @@ const HandpickForm: React.FC = () => {
   };
 
   const CurrentStepComponent = steps[currentStep - 1].component;
-  console.log(CurrentStepComponent, "CurrentStepComponent");
   const progressPercentage = (currentStep / steps.length) * 100;
 
   return (
@@ -197,7 +196,7 @@ const HandpickForm: React.FC = () => {
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {steps.map((step, index) => (
-              console.log(step, "step"),
+
               <React.Fragment key={step.id}>
                 <div className="flex items-center flex-none">
                   <div

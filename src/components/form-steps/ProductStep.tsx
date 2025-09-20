@@ -23,37 +23,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus, X, Package, Tag } from 'lucide-react';
 
 const brands = [
-  'Nike', 'Adidas', 'Apple', 'Samsung', 'Sony', 'Canon', 'Dell', 'HP',
-  'Microsoft', 'Google', 'Amazon', 'Zara', 'H&M', 'Uniqlo', 'IKEA',
-  'Other (Custom)'
+  'Carhartt', 'Ralph Lauren', 'Stone Island', 'Stussy', 'Nike', 'Burberry', 'Arc Teryx', 'Patagonia',
 ];
-
 
 const categoryOptions = [
-  "Adidas",
-  "Balmain",
-  "Benetton",
-  "Burberry",
-  "Calvin Klein",
-  "Carhartt",
-  "Champion",
-  "Ellesse",
-  "Fila",
-  "Guess",
-  "Kappa",
-  "Kenzo",
-  "Lacoste",
-  "Napapijri",
-  "Nike",
-  "Ralph Lauren",
-  "Tommy Hilfiger",
-  "The North Face",
-  "Valentino"
+  'Carhartt', 'Ralph Lauren', 'Stone Island', 'Stussy', 'Nike', 'Burberry', 'Patagonia', 'Other'
 ];
 
 
-const gradeOptions = ['Premium', 'Standard', 'Budget', 'Luxury'];
-const sizeOptions = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size', 'Custom'];
+const gradeOptions = ['A Grade', 'B Grade', 'C Grade', 'Mix Grade'];
+const sizeOptions = [
+  'XS',
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  'XS–S',
+  'S–M',
+  'M–L',
+  'L–XL',
+  'XL–XXL',
+  'Custom'
+];
 const colorOptions = [
   'Black', 'White', 'Red', 'Blue', 'Green', 'Yellow', 'Orange',
   'Purple', 'Pink', 'Gray', 'Brown', 'Multi-color', 'Custom'
@@ -107,55 +99,7 @@ const ProductStep: React.FC = () => {
         </p>
       </div>
 
-      {/* Brands Selection */}
-      {/* <Card className="shadow-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Tag className="w-5 h-5" />
-            Preferred Brands
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {brands.map((brand) => (
-              <div key={brand} className="flex items-center space-x-2">
-                <Checkbox
-                  id={brand}
-                  checked={selectedBrands.includes(brand)}
-                  onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
-                  className="transition-all duration-300"
-                />
-                <label
-                  htmlFor={brand}
-                  className="text-sm font-medium cursor-pointer hover:text-primary transition-colors"
-                >
-                  {brand}
-                </label>
-              </div>
-            ))}
-          </div>
 
-          {showCustomBrand && (
-            <FormField
-              control={control}
-              name="customBrand"
-              render={({ field }) => (
-                <FormItem className="mt-4">
-                  <FormLabel>Custom Brand Name</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter custom brand name" 
-                      {...field}
-                      className="transition-all duration-300 focus:shadow-elegant"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-        </CardContent>
-      </Card> */}
 
       {/* Categories */}
       <Card className="shadow-card">
@@ -195,32 +139,37 @@ const ProductStep: React.FC = () => {
                     <X className="w-4 h-4" />
                   </Button>
 
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <FormField
-                      control={control}
-                      name={`categories.${index}.name`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Brand *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select brand" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {categoryOptions.map((category) => (
-                                <SelectItem key={category} value={category}>
-                                  {category}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+                    {/* Brand Select & Other Brand Input */}
+                    <div className="flex flex-col gap-2">
+                      <FormField
+                        control={control}
+                        name={`categories.${index}.name`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Brand *</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select brand" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {categoryOptions.map((category) => (
+                                  <SelectItem key={category} value={category}>
+                                    {category}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                    </div>
 
+                    {/* Grade */}
                     <FormField
                       control={control}
                       name={`categories.${index}.grade`}
@@ -246,6 +195,7 @@ const ProductStep: React.FC = () => {
                       )}
                     />
 
+                    {/* Size */}
                     <FormField
                       control={control}
                       name={`categories.${index}.size`}
@@ -271,31 +221,28 @@ const ProductStep: React.FC = () => {
                       )}
                     />
 
-                    <FormField
-                      control={control}
-                      name={`categories.${index}.color`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Color *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select color" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {colorOptions.map((color) => (
-                                <SelectItem key={color} value={color}>
-                                  {color}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
+                    {/* Inline Other Brand Input */}
+                      {watch(`categories.${index}.name`) === 'Other' && (
+                        <FormField
+                          control={control}
+                          name={`categories.${index}.description`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-xs text-muted-foreground">Write Brand Name</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Carhartt, Ed Hardy, Stone Island..."
+                                  {...field}
+                                  className="transition-all duration-300 focus:shadow-elegant"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       )}
-                    />
 
+                    {/* Quantity */}
                     <FormField
                       control={control}
                       name={`categories.${index}.quantity`}
@@ -309,25 +256,6 @@ const ProductStep: React.FC = () => {
                               placeholder="1"
                               {...field}
                               onChange={(e) => field.onChange(parseInt(e.target.value))}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {watch(`categories.${index}.name`) === 'Other' && (
-                    <FormField
-                      control={control}
-                      name={`categories.${index}.description`}
-                      render={({ field }) => (
-                        <FormItem className="mt-4">
-                          <FormLabel>Description</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Please describe the specific product you're looking for..."
-                              {...field}
                               className="transition-all duration-300 focus:shadow-elegant"
                             />
                           </FormControl>
@@ -335,7 +263,7 @@ const ProductStep: React.FC = () => {
                         </FormItem>
                       )}
                     />
-                  )}
+                  </div>
                 </CardContent>
               </Card>
             ))
