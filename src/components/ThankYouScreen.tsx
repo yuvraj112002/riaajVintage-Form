@@ -17,7 +17,7 @@ const ThankYouScreen: React.FC = () => {
         variant="luxury"
         size="lg"
         className="flex items-center gap-2 luxury-hover"
-        onClick={() => window.location.href = 'https://www.riaajvintage.com/'}
+        onClick={() => window.top.location.href = 'https://www.riaajvintage.com/'}
       >
         <ArrowLeft className="w-5 h-5" />
         Return to Home
