@@ -7,6 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom'; // Add this import at the top
+import { Loader2 } from 'lucide-react'; // Spinner icon
+import ThankYouScreen from "@/components/ThankYouScreen";
 
 // Import step components
 import WelcomeStep from './form-steps/WelcomeStep';
@@ -69,6 +72,8 @@ const steps = [
 const HandpickForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [budgetError, setBudgetError] = useState<string | null>(null);
+  const [showThankYou, setShowThankYou] = useState(false);
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -91,6 +96,8 @@ const HandpickForm: React.FC = () => {
     },
     shouldUnregister: false
   });
+
+  const navigate = useNavigate(); // Add this line
 
   const getStepFields = (step: number): (keyof FormData)[] => {
     switch (step) {
@@ -138,20 +145,18 @@ const HandpickForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-
     setIsSubmitting(true);
     try {
-      // Here you would integrate with EmailJS
-
-
-      // Simulate API call
-      await sendHandpickEmail(data)
+      await sendHandpickEmail(data);
 
       toast({
         title: "Form Submitted Successfully!",
         description: "We'll be in touch soon to confirm your handpick selection.",
       });
 
+      setTimeout(() => {
+        setShowThankYou(true); // Show thank you screen
+      }, 1000);
 
     } catch (error) {
       console.log(error, "error");
@@ -164,6 +169,10 @@ const HandpickForm: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (showThankYou) {
+    return <ThankYouScreen />;
+  }
 
   const CurrentStepComponent = steps[currentStep - 1].component;
   const progressPercentage = (currentStep / steps.length) * 100;
@@ -247,7 +256,11 @@ const HandpickForm: React.FC = () => {
             <Card className="shadow-card border-0 bg-card/95 backdrop-blur-sm">
               <CardContent className="md:p-8">
                 <div className="animate-step-in">
-                  <CurrentStepComponent />
+                  {currentStep === 3 ? (
+                    <BudgetStep onBudgetError={setBudgetError} />
+                  ) : (
+                    <CurrentStepComponent />
+                  )}
                 </div>
 
                 {/* Navigation */}
@@ -271,6 +284,7 @@ const HandpickForm: React.FC = () => {
                         variant="luxury"
                         onClick={nextStep}
                         className="flex items-center gap-2 luxury-hover"
+                        disabled={currentStep === 3 && !!budgetError}
                       >
                         Next
                         <ArrowRight className="w-4 h-4" />
@@ -282,8 +296,17 @@ const HandpickForm: React.FC = () => {
                         disabled={isSubmitting}
                         className="flex items-center gap-2 luxury-hover"
                       >
-                        {isSubmitting ? 'Submitting...' : 'Submit'}
-                        <CheckCircle2 className="w-4 h-4" />
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Submitting...
+                          </>
+                        ) : (
+                          <>
+                            Submit
+                            <CheckCircle2 className="w-4 h-4" />
+                          </>
+                        )}
                       </Button>
                     )}
                   </div>

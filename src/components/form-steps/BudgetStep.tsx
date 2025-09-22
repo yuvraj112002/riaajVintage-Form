@@ -52,7 +52,11 @@ const getMinAmount = (code: string) => {
   return minEuro * rate;
 };
 
-const BudgetStep: React.FC = () => {
+type BudgetStepProps = {
+  onBudgetError?: (error: string | null) => void;
+};
+
+const BudgetStep: React.FC<BudgetStepProps> = ({ onBudgetError }) => {
   const { control, setValue, watch } = useFormContext<HandpickForm>();
   const notes = watch("notes");
   const currency = watch("currency");
@@ -246,18 +250,15 @@ const BudgetStep: React.FC = () => {
 
   function validateBudget(budgetFrom: number, budgetTo: number, currency: string) {
     const minAmount = getMinAmount(currency);
+    let error: string | null = null;
     if (budgetFrom < minAmount || budgetTo < minAmount) {
-      setBudgetError(
-        `Minimum budget is €${minEuro} or equivalent (${minAmount.toFixed(2)} ${currency})`
-      );
-      return false;
+      error = `Minimum budget is €${minEuro} or equivalent (${minAmount.toFixed(2)} ${currency})`;
+    } else if (budgetTo <= budgetFrom) {
+      error = "Budget To must be greater than Budget From.";
     }
-    if (budgetTo <= budgetFrom) {
-      setBudgetError("Budget To must be greater than Budget From.");
-      return false;
-    }
-    setBudgetError(null);
-    return true;
+    setBudgetError(error);
+    if (onBudgetError) onBudgetError(error);
+    return !error;
   }
 
   return (
