@@ -102,7 +102,7 @@ const ProductStep: React.FC = () => {
 
 
       {/* Categories */}
-      <Card className="shadow-card">
+      <Card className="shadow-card bg-[#EBF1DB]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <CardTitle className="flex items-center gap-2">
             <Package className="w-5 h-5" />
@@ -113,7 +113,7 @@ const ProductStep: React.FC = () => {
             variant="outline"
             size="sm"
             onClick={addCategory}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-[#1E5846] text-white "
           >
             <Plus className="w-4 h-4" />
             Add Category
@@ -127,8 +127,8 @@ const ProductStep: React.FC = () => {
             </div>
           ) : (
             fields.map((field, index) => (
-              <Card key={field.id} className="relative bg-muted/20">
-                <CardContent className="pt-6 px-3">
+              <Card key={field.id} className="relative ">
+                <CardContent className="pt-6 px-3 bg-[#EBF1DB]">
                   <Button
                     type="button"
                     variant="ghost"
@@ -141,7 +141,7 @@ const ProductStep: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
                     {/* Brand Select & Other Brand Input */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 bg-[#EBF1DB]">
                       <FormField
                         control={control}
                         name={`categories.${index}.name`}

@@ -178,7 +178,7 @@ const HandpickForm: React.FC = () => {
   const progressPercentage = (currentStep / steps.length) * 100;
 
   return (
-    <div className="min-h-full bg-gradient-background py-8 px-4">
+    <div className="min-h-full bg-[#EBF1DB] py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8 text-center">
@@ -211,12 +211,12 @@ const HandpickForm: React.FC = () => {
                   <div
                     className={`
               w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center
-              text-xs sm:text-sm font-semibold border-2 flex-none
+              text-xs sm:text-sm font-semibold border-2 flex-none  text-white
               ${index + 1 === currentStep
-                        ? 'bg-luxury text-luxury-foreground border-luxury'
+                        ? ' bg-[#1E5846] text-white text-luxury-foreground border-luxury '
                         : index + 1 < currentStep
-                          ? 'bg-primary text-primary-foreground border-primary'
-                          : 'bg-background text-muted-foreground border-muted'
+                          ? 'text-primary-foreground border-primary bg-[#1E5846]'
+                          : ' text-muted-foreground border-muted bg-[#77b3a0]'
                       }
             `}
                   >
@@ -253,9 +253,9 @@ const HandpickForm: React.FC = () => {
               console.log(errors);
             }
           )}>
-            <Card className="shadow-card border-0 bg-card/95 backdrop-blur-sm">
-              <CardContent className="md:p-8">
-                <div className="animate-step-in">
+            <Card className="shadow-card border-0 bg-[#EBF1DB] backdrop-blur-sm">
+              <CardContent className="md:p-8 bg-[#EBF1DB]">
+                <div className="animate-step-in bg-[#EBF1DB]">
                   {currentStep === 3 ? (
                     <BudgetStep onBudgetError={setBudgetError} />
                   ) : (
@@ -270,7 +270,7 @@ const HandpickForm: React.FC = () => {
                       type="button"
                       variant="outline"
                       onClick={prevStep}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 bg-[#1E5846] text-white"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       Previous
@@ -283,7 +283,7 @@ const HandpickForm: React.FC = () => {
                         type="button"
                         variant="luxury"
                         onClick={nextStep}
-                        className="flex items-center gap-2 luxury-hover"
+                        className="flex items-center gap-2  bg-[#1E5846] text-white"
                         disabled={currentStep === 3 && !!budgetError}
                       >
                         Next
@@ -294,7 +294,7 @@ const HandpickForm: React.FC = () => {
                         type="submit"
                         variant="luxury"
                         disabled={isSubmitting}
-                        className="flex items-center gap-2 luxury-hover"
+                        className="flex items-center gap-2 bg-[#1E5846] text-white"
                       >
                         {isSubmitting ? (
                           <>
