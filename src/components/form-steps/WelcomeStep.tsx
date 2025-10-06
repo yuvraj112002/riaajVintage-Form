@@ -31,7 +31,7 @@ const WelcomeStep: React.FC = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 bg-foreground rounded-full mt-2 flex-shrink-0"></span>
-                <span className="text-foreground">Pick a schedule for a quick call/WhatsApp confirmation.</span>
+                <span className="text-foreground">Pick a schedule for a quick call.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 bg-foreground rounded-full mt-2 flex-shrink-0"></span>

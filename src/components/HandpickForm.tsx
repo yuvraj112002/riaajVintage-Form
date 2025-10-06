@@ -186,7 +186,7 @@ const HandpickForm: React.FC = () => {
             Riaaj Vintage — Handpick Request
           </h1>
           <p className="text-muted-foreground text-lg">
-            A clean, responsive, step-by-step form built with React + Tailwind.
+             Submit your handpick request and get exclusive vintage pieces curated for you.
           </p>
         </div>
 
@@ -211,12 +211,12 @@ const HandpickForm: React.FC = () => {
                   <div
                     className={`
               w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center
-              text-xs sm:text-sm font-semibold border-2 flex-none  text-white
+              text-[0.75rem] sm:text-[0.875rem] font-semibold border-2 flex-none  text-white
               ${index + 1 === currentStep
-                        ? ' bg-[#1E5846] text-white text-luxury-foreground border-luxury '
+                        ? ' bg-[#1E5846] text-white text-luxury-foreground  '
                         : index + 1 < currentStep
-                          ? 'text-primary-foreground border-primary bg-[#1E5846]'
-                          : ' text-muted-foreground border-muted bg-[#77b3a0]'
+                          ? 'text-primary-foreground  bg-[#1E5846]'
+                          : ' text-muted-foreground  bg-[#77b3a0]'
                       }
             `}
                   >
