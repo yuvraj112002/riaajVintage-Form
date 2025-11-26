@@ -154,9 +154,7 @@ const HandpickForm: React.FC = () => {
         description: "We'll be in touch soon to confirm your handpick selection.",
       });
 
-      setTimeout(() => {
-        setShowThankYou(true); // Show thank you screen
-      }, 1000);
+        setShowThankYou(true); 
 
     } catch (error) {
       console.log(error, "error");
